@@ -37,12 +37,16 @@ import {
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useRef, useEffect, useState } from "react";
+import DOMPurify from "dompurify";
+import { visit } from "unist-util-visit";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dracula as drac } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 export default function CodeMirror() {
   const targetElement = useRef(null);
   const initialText = "Hello This is a text";
   const [value, setValue] = useState("");
-
+  const [language, setLanguage] = useState("");
   useEffect(() => {
     if (targetElement.current) {
       const updateListener = EditorView.updateListener.of((update) => {
@@ -103,18 +107,41 @@ export default function CodeMirror() {
   // const handleOnChange = (val: string) => {
   //   setValue(val);
   //   console.log(value);
-  const updatedValue = value.replace(/\n/g, "\n\n");
+  // const updatedValue = value.replace(/\n/g, "\n\n");
+  const clean = DOMPurify.sanitize(value);
   // };
   return (
-    <>
+    <main className="w-full h-full ">
       <div className="min-h-[200px]" ref={targetElement}></div>
 
       <Markdown
         className={"bg-white"}
         remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-      >
-        {updatedValue}
-      </Markdown>
-    </>
+        children={clean}
+        components={{
+          code(props) {
+            const { children, className, node, ...rest } = props;
+            const match = /language-(\w+)/.exec(className || "");
+            const getLang = match ? match[1] : "";
+            setLanguage(getLang);
+            console.log(language);
+            return match ? (
+              <SyntaxHighlighter
+                // {...rest}
+                PreTag="div"
+                children={String(children).replace(/\n$/, "")}
+                language={match[1]}
+                style={drac}
+              />
+            ) : (
+              <code {...rest} className={className}>
+                {children}
+              </code>
+            );
+          },
+        }}
+      />
+      {/* {updatedValue} */}
+    </main>
   );
 }

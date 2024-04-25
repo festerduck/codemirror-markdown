@@ -11,9 +11,9 @@ export default function Home() {
     console.log("value in main: ", value);
   };
   return (
-    <main className="min-h-screen gap-4 bg-neutral-800">
-      <CodeMirror />
-      <Uwi />
+    <main className="w-screen h-screen bg-neutral-800">
+      <CodeMirror  />
+      {/* <Uwi /> */}
     </main>
   );
 }

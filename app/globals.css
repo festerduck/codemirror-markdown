@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
+/* 
 "GitHub Flavor", a GitHub flavored CSS style sheet for Markdown documents.
 Based on Chris Patuzzo's github.css (https://gist.github.com/tuzz/3331384).
 
@@ -33,16 +33,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+html {
+  margin: 0px;
+  padding: 0px;
+}
+
 /*Main body*/
 body {
+  height: 100vh;
+  width: 100%;
   font-family: Helvetica, arial, sans-serif;
   font-size: 14px;
   line-height: 1.4em;
   background-color: white;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 25px;
-  padding-right: 25px;
 }
 
 body > *:first-child {
@@ -631,7 +639,7 @@ mark {
 * {
   -webkit-print-color-adjust: exact;
 }
-@media screen and (min-width: 914px) {
+/* @media screen and (min-width: 914px) {
   body {
     width: 854px;
     margin: 0 auto;
@@ -648,4 +656,15 @@ mark {
   body {
     padding: 2cm;
   }
+} */
+
+ol {
+  padding: 0.25 rem;
+  margin-left: 2 rem;
+  font-style: italic;
+  list-style-type: decimal;
+}
+li {
+  padding: 0.25 rem;
+  margin-left: 2 rem;
 }
