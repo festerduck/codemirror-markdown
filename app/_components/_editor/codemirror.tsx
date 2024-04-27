@@ -7,7 +7,6 @@ import {
   closeBracketsKeymap,
   completionKeymap,
 } from "@codemirror/autocomplete";
-import { vim } from "@replit/codemirror-vim";
 import {
   defaultKeymap,
   history,
@@ -92,7 +91,6 @@ export default function CodeMirror() {
               ...lintKeymap,
               indentWithTab,
             ]),
-            // vim(),
             markdown(),
             updateListener,
             dracula,
@@ -110,7 +108,6 @@ export default function CodeMirror() {
       };
     }
   }, []);
-  // const updatedValue = value.replace(/\n/g, "\n\n");
   // const clean = DOMPurify.sanitize(value);
 
   function formatMarkdownInput(input: string) {
@@ -119,11 +116,8 @@ export default function CodeMirror() {
     return formattedInput;
   }
 
-  // Example usage
-  const markdownInput =
-    "Here's a paragraph that needs a newline to render correctly.\nHere's another line in the same paragraph.\n\nHere's a new paragraph.";
+  // processing the newlines so that instead of the double spaces and double return, only single keypress adds a newline.
   const processedInput = formatMarkdownInput(value);
-  // Now `processedInput` is ready to be rendered with your Markdown renderer
 
   return (
     <main className="w-full h-full flex items-center  text-red-500">
@@ -156,7 +150,6 @@ export default function CodeMirror() {
           },
         }}
       />
-      {/* {updatedValue} */}
     </main>
   );
 }

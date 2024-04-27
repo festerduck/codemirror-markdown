@@ -1,19 +1,12 @@
 "use client";
 import Image from "next/image";
-import CodeMirror from "./components/editor/codemirror";
-import Uwi from "./components/uwi/uwi";
-import MdParser from "./components/md-parse/mdparser";
+import CodeMirror from "./_components/_editor/codemirror";
 import { useState } from "react";
+import HomePage from "./pages/page";
 export default function Home() {
-  const [value, setValue] = useState("");
-  const handleReturn = (data: string) => {
-    setValue(data);
-    console.log("value in main: ", value);
-  };
   return (
-    <main className="w-screen h-screen bg-neutral-800">
-      <CodeMirror  />
-      {/* <Uwi /> */}
+    <main className="w-full h-full">
+      <HomePage />
     </main>
   );
 }
