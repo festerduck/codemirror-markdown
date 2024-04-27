@@ -8,21 +8,8 @@ const LandingPage = () => {
   return (
     <>
       <main className="w-full h-full px-10 flex flex-col items-center gap-3 bg-white">
-        <nav className="w-full py-8 flex items-start justify-between">
-          <div className="flex gap-2 items-center pointer-events-none">
-            <Image
-              className="w-8 h-8"
-              src="./logo.svg"
-              alt="logo"
-              width={34}
-              height={34}
-              priority={true}
-            />
-            <span className="logo text-lg font-semibold">Composr</span>
-          </div>
-        </nav>
         <section className="relative w-full h-3/4 px-4 flex flex-col items-center justify-center gap-3 bg-[#F1F1F1] rounded-[24px]">
-          <h1 className="text-[48px] text-center tracking-tight leading-[48px]">
+          <h1 className="text-[48px] text-center text-neutral-800 tracking-tight leading-[48px]">
             Minimal{" "}
             <span className={`text-[56px] pf-italic text-[#E87205]`}>
               {" "}
