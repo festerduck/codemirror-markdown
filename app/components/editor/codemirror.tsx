@@ -1,5 +1,6 @@
 "use client";
-import { dracula, coolGlow } from "thememirror";
+import { dracula } from "@ddietr/codemirror-themes/dracula.js";
+
 import {
   autocompletion,
   closeBrackets,
@@ -7,9 +8,13 @@ import {
   completionKeymap,
 } from "@codemirror/autocomplete";
 import { vim } from "@replit/codemirror-vim";
-import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
+import {
+  defaultKeymap,
+  history,
+  historyKeymap,
+  indentWithTab,
+} from "@codemirror/commands";
 import { markdown } from "@codemirror/lang-markdown";
-import { javascript } from "@codemirror/lang-javascript";
 import {
   bracketMatching,
   defaultHighlightStyle,
@@ -38,7 +43,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useRef, useEffect, useState } from "react";
 import DOMPurify from "dompurify";
-import { visit } from "unist-util-visit";
+// import { visit } from "unist-util-visit";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula as drac } from "react-syntax-highlighter/dist/esm/styles/prism";
 
@@ -85,15 +90,16 @@ export default function CodeMirror() {
               ...foldKeymap,
               ...completionKeymap,
               ...lintKeymap,
+              indentWithTab,
             ]),
-            vim(),
+            // vim(),
             markdown(),
             updateListener,
-            coolGlow,
+            dracula,
             EditorView.theme({
               "&": {
-                height: "500px",
-                minHeight: "500px", // Use minHeight to ensure it does not shrink below this height
+                height: "100%",
+                // minHeight: "500px", // Use minHeight to ensure it does not shrink below this height
               },
             }),
           ],
@@ -104,20 +110,29 @@ export default function CodeMirror() {
       };
     }
   }, []);
-  // const handleOnChange = (val: string) => {
-  //   setValue(val);
-  //   console.log(value);
   // const updatedValue = value.replace(/\n/g, "\n\n");
-  const clean = DOMPurify.sanitize(value);
-  // };
+  // const clean = DOMPurify.sanitize(value);
+
+  function formatMarkdownInput(input: string) {
+    let formattedInput = input.replace(/\n/g, "  \n");
+
+    return formattedInput;
+  }
+
+  // Example usage
+  const markdownInput =
+    "Here's a paragraph that needs a newline to render correctly.\nHere's another line in the same paragraph.\n\nHere's a new paragraph.";
+  const processedInput = formatMarkdownInput(value);
+  // Now `processedInput` is ready to be rendered with your Markdown renderer
+
   return (
-    <main className="w-full h-full ">
-      <div className="min-h-[200px]" ref={targetElement}></div>
+    <main className="w-full h-full flex items-center  text-red-500">
+      <div className="w-full h-full" ref={targetElement}></div>
 
       <Markdown
-        className={"bg-white"}
+        className={"w-full h-full bg-white"}
         remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-        children={clean}
+        children={processedInput}
         components={{
           code(props) {
             const { children, className, node, ...rest } = props;
