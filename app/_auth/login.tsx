@@ -17,7 +17,7 @@ import React, { useState } from "react";
 import { User } from "../types/types";
 
 const SignIn = () => {
-  const [user, setUser] = useState<User>({ userName: "", password: "" });
+  const [user, setUser] = useState<User>({ email: "", password: "" });
   const inputStyle =
     "w-full h-[42px] px-3 rounded-[8px] ring-0 bg-neutral-100 focus:outline-none text-sm";
 
@@ -30,6 +30,7 @@ const SignIn = () => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     console.log(user);
   };
   return (
@@ -44,11 +45,11 @@ const SignIn = () => {
         <CardContent className="flex flex-col gap-2">
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <input
-              name="userName"
+              name="email"
               className={inputStyle}
-              type="text"
+              type="email"
               placeholder="Email or Username"
-              value={user.userName}
+              value={user.email}
               onChange={handleInputChange}
               required
             />
