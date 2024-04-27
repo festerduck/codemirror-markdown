@@ -13,10 +13,25 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import React, { useState } from "react";
+import { User } from "../types/types";
 
 const SignIn = () => {
+  const [user, setUser] = useState<User>({ userName: "", password: "" });
   const inputStyle =
     "w-full h-[42px] px-3 rounded-[8px] ring-0 bg-neutral-100 focus:outline-none text-sm";
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(user);
+  };
   return (
     <>
       <Card className="mx-auto max-w-sm min-h-[500px] flex flex-col justify-center">
@@ -27,17 +42,23 @@ const SignIn = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <form className="flex flex-col gap-3">
+          <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <input
+              name="userName"
               className={inputStyle}
               type="text"
               placeholder="Email or Username"
+              value={user.userName}
+              onChange={handleInputChange}
               required
             />
             <input
+              name="password"
               className={inputStyle}
               type="password"
               placeholder="Password"
+              value={user.password}
+              onChange={handleInputChange}
               required
             />
             <Button type="submit" className="w-full h-[42px]">
