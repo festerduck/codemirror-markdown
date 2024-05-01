@@ -120,10 +120,11 @@ export default function CodeMirror() {
   }
 
   // processing the newlines so that instead of the double spaces and double return, only single keypress adds a newline.
-  const processedInput = formatMarkdownInput(value);
+  const processedInput =
+    value == "" ? "The document has been deleted." : formatMarkdownInput(value);
 
   return (
-    <section className="w-full h-full p-2">
+    <section className="w-full h-full p-4">
       <div className="w-full h-full flex flex-col items-center  text-foreground border border-foreground rounded-lg">
         <div className="bottons w-full h-12 flex gap-2 border-b-foreground border-b  p-1">
           <Button
