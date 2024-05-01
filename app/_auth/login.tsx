@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
 import { User } from "../types/types";
+import Image from "next/image";
 
 const SignIn = () => {
   const [user, setUser] = useState<User>({ email: "", password: "" });
@@ -35,14 +36,17 @@ const SignIn = () => {
   };
   return (
     <>
-      <Card className="mx-auto max-w-sm min-h-[500px] flex flex-col justify-center">
+      <Card className="mx-auto w-96 min-h-[500px] flex flex-col justify-center gap-2">
         <CardHeader className="text-center">
-          <CardTitle className="font-medium">Welcome to Composr</CardTitle>
+          <CardTitle className="font-semibold flex flex-col items-center gap-3">
+            <Image src={"./logo.svg"} alt="logo" height={60} width={60} />
+            Welcome to Composr
+          </CardTitle>
           <CardDescription>
             Ready to dive back in? Sign in below
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
+        <CardContent className="flex flex-col gap-3">
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <input
               name="email"
@@ -68,7 +72,7 @@ const SignIn = () => {
           </form>
           <div className="text-sm text-center text-neutral-500 mt-2">
             Forgot your password?{" "}
-            <Link href={"#"} className="text-neutral-800 font-medium">
+            <Link href={"#"} className="text-neutral-800 font-semibold">
               Reset
             </Link>{" "}
           </div>

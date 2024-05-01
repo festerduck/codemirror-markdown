@@ -8,7 +8,7 @@ export default function HomePage() {
   const [authenticated, setAuthenticated] = useState(false);
 
   return (
-    <main className="h-full w-full bg-white">
+    <main className="h-full w-full bg-background">
       <NavBar />
       {!authenticated ? <LandingPage /> : <h1>Sign in</h1>}
     </main>

@@ -45,12 +45,14 @@ import DOMPurify from "dompurify";
 // import { visit } from "unist-util-visit";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula as drac } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Button } from "@/components/ui/button";
 
 export default function CodeMirror() {
   const targetElement = useRef(null);
   const initialText = "Hello This is a text";
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("");
+  const [edit, setEdit] = useState(true);
   useEffect(() => {
     if (targetElement.current) {
       const updateListener = EditorView.updateListener.of((update) => {
@@ -62,7 +64,7 @@ export default function CodeMirror() {
       const editorView = new EditorView({
         parent: targetElement.current,
         state: EditorState.create({
-          doc: initialText,
+          doc: value,
           extensions: [
             lineNumbers(),
             highlightActiveLineGutter(),
@@ -97,6 +99,7 @@ export default function CodeMirror() {
             EditorView.theme({
               "&": {
                 height: "100%",
+
                 // minHeight: "500px", // Use minHeight to ensure it does not shrink below this height
               },
             }),
@@ -107,7 +110,7 @@ export default function CodeMirror() {
         editorView.destroy(); // Clean up the EditorView when component unmounts
       };
     }
-  }, []);
+  }, [edit]);
   // const clean = DOMPurify.sanitize(value);
 
   function formatMarkdownInput(input: string) {
@@ -120,36 +123,60 @@ export default function CodeMirror() {
   const processedInput = formatMarkdownInput(value);
 
   return (
-    <main className="w-full h-full flex items-center  text-red-500">
-      <div className="w-full h-full" ref={targetElement}></div>
-
-      <Markdown
-        className={"w-full h-full bg-white"}
-        remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-        children={processedInput}
-        components={{
-          code(props) {
-            const { children, className, node, ...rest } = props;
-            const match = /language-(\w+)/.exec(className || "");
-            const getLang = match ? match[1] : "";
-            setLanguage(getLang);
-            console.log(language);
-            return match ? (
-              <SyntaxHighlighter
-                // {...rest}
-                PreTag="div"
-                children={String(children).replace(/\n$/, "")}
-                language={match[1]}
-                style={drac}
-              />
-            ) : (
-              <code {...rest} className={className}>
-                {children}
-              </code>
-            );
-          },
-        }}
-      />
-    </main>
+    <section className="w-full h-full p-2">
+      <div className="w-full h-full flex flex-col items-center  text-foreground border border-foreground rounded-lg">
+        <div className="bottons w-full h-12 flex gap-2 border-b-foreground border-b  p-1">
+          <Button
+            className="text-xs"
+            size={"sm"}
+            variant={edit ? "default" : "secondary"}
+            onClick={() => setEdit(true)}
+          >
+            Edit
+          </Button>
+          <Button
+            className="text-xs"
+            size={"sm"}
+            variant={edit ? "secondary" : "default"}
+            onClick={() => setEdit(false)}
+          >
+            Preview
+          </Button>
+        </div>
+        <div className="section w-full h-full flex">
+          {edit ? (
+            <div className="w-full h-full" ref={targetElement}></div>
+          ) : (
+            <Markdown
+              className={"w-full h-full bg-white"}
+              remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+              children={processedInput}
+              components={{
+                code(props) {
+                  const { children, className, node, ...rest } = props;
+                  const match = /language-(\w+)/.exec(className || "");
+                  const getLang = match ? match[1] : "";
+                  setLanguage(getLang);
+                  console.log(language);
+                  return match ? (
+                    <SyntaxHighlighter
+                      // {...rest}
+                      PreTag="div"
+                      children={String(children).replace(/\n$/, "")}
+                      language={match[1]}
+                      style={drac}
+                    />
+                  ) : (
+                    <code {...rest} className={className}>
+                      {children}
+                    </code>
+                  );
+                },
+              }}
+            />
+          )}{" "}
+        </div>
+      </div>
+    </section>
   );
 }
