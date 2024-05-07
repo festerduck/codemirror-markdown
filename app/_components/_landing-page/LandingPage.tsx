@@ -5,11 +5,17 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import SignIn from "@/app/_auth/login";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
+
 
 const playfair = Playfair_Display({ subsets: ["latin"] });
 
 const LandingPage = () => {
   const [btn, setBtn] = useState(false);
+
+  const supabase = createClientComponentClient();
 
   return (
     <>
@@ -30,7 +36,7 @@ const LandingPage = () => {
             <br />
             saving code.
           </p>
-          <Link href={"/login"}>
+          <Link href={btn ? "/notes" : "/login"}>
             <Button variant={"default"} className="bg-foreground font-semibold">
               Get Started
             </Button>{" "}

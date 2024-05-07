@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,18 +8,28 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
 import { User } from "../types/types";
 import Image from "next/image";
 
+//Supabase
+import { useRouter } from "next/navigation";
+
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
+
 const SignIn = () => {
+  const supabase = createClientComponentClient();
   const [user, setUser] = useState<User>({ email: "", password: "" });
+  const router = useRouter();
+
+
+
   const inputStyle =
-    "w-full h-[42px] px-3 rounded-[8px] ring-0 bg-neutral-100 focus:outline-none text-sm";
+    "w-full h-[52px] px-3 rounded-[8px] ring-0 dark:bg-background bg-neutral-100 text-foreground focus:outline-none dark:focus:ring text-sm";
+
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,18 +40,31 @@ const SignIn = () => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const email = user.email;
+    const password = user.password;
 
+    const { error } = await supabase.auth.signInWithPassword({
+      email, password
+    })
+
+    if (error) {
+      console.error(error.message)
+    }
+    else {
+      router.push('/notes')
+    }
     console.log(user);
   };
   return (
     <>
-      <Card className="mx-auto w-96 min-h-[500px] flex flex-col justify-center gap-2">
+      <Card className="mx-auto w-full h-4/6 md:w-[26rem] md:min-h-[500px] bg-transparent md:bg-card flex flex-col rounded-[16px] justify-center gap-2">
         <CardHeader className="text-center">
-          <CardTitle className="font-semibold flex flex-col items-center gap-3">
-            <Image src={"./logo.svg"} alt="logo" height={60} width={60} />
+          <CardTitle className="font-semibold text-foreground flex flex-col items-center gap-4">
+            <Image src={"./logo.svg"} className="dark:hidden" alt="logo" height={60} width={60} />
+            <Image src={"./logo-dark.svg"} className="hidden dark:block" alt="logo" height={60} width={60} />
             Welcome to Composr
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-secondary-foreground">
             Ready to dive back in? Sign in below
           </CardDescription>
         </CardHeader>
@@ -66,13 +88,13 @@ const SignIn = () => {
               onChange={handleInputChange}
               required
             />
-            <Button type="submit" className="w-full h-[42px]">
+            <Button type="submit" className="w-full h-[52px]" variant={"default"}>
               Sign in
             </Button>
           </form>
-          <div className="text-sm text-center text-neutral-500 mt-2">
+          <div className="text-sm text-center text-secondary-foreground mt-2">
             Forgot your password?{" "}
-            <Link href={"#"} className="text-neutral-800 font-semibold">
+            <Link href={"#"} className="text-foreground  font-semibold">
               Reset
             </Link>{" "}
           </div>
