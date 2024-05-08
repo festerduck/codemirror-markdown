@@ -26,10 +26,10 @@ import { lintKeymap } from "@codemirror/lint";
 import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
 import { EditorState } from "@codemirror/state";
 import {
+  EditorView,
   crosshairCursor,
   drawSelection,
   dropCursor,
-  EditorView,
   highlightActiveLine,
   highlightActiveLineGutter,
   highlightSpecialChars,
@@ -38,17 +38,17 @@ import {
   rectangularSelection,
 } from "@codemirror/view";
 
+import DOMPurify from "dompurify";
+import { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useRef, useEffect, useState } from "react";
-import DOMPurify from "dompurify";
 // import { visit } from "unist-util-visit";
+import "@/components/styles/markdown-dark.css";
+import "@/components/styles/markdown-light.css";
+import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula as drac } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Button } from "@/components/ui/button";
-import "@/components/styles/markdown-dark.css"
-import "@/components/styles/markdown-light.css"
-import { useTheme } from "next-themes";
 
 export default function CodeMirror() {
   const targetElement = useRef(null);
@@ -58,11 +58,9 @@ export default function CodeMirror() {
   const [edit, setEdit] = useState(true);
 
   const theme = useTheme();
-  console.log(theme.theme)
-
+  console.log(theme.theme);
 
   useEffect(() => {
-
     if (targetElement.current) {
       const updateListener = EditorView.updateListener.of((update) => {
         if (update.docChanged) {
@@ -134,23 +132,30 @@ export default function CodeMirror() {
 
   return (
     <section className="w-full h-full p-4">
-      <div className="w-full min-h-full flex flex-col items-center  text-foreground border border-foreground rounded-lg">
-        <div className="bottons w-full h-12 flex gap-2 border-b-foreground border-b  p-1">
-          <Button
-            className="text-xs"
-            size={"sm"}
-            variant={edit ? "default" : "secondary"}
-            onClick={() => setEdit(true)}
-          >
-            Edit
-          </Button>
-          <Button
-            className="text-xs"
-            size={"sm"}
-            variant={edit ? "secondary" : "default"}
-            onClick={() => setEdit(false)}
-          >
-            Preview
+      <div
+        className={`w-full ${edit ? "h-full" : "min-h-full"} flex flex-col items-center  text-foreground border border-foreground rounded-lg`}
+      >
+        <div className="bottons w-full h-12 flex justify-between gap-2 border-b-foreground border-b px-2  p-1">
+          <div>
+            <Button
+              className="text-xs"
+              size={"sm"}
+              variant={edit ? "default" : "secondary"}
+              onClick={() => setEdit(true)}
+            >
+              Edit
+            </Button>
+            <Button
+              className="text-xs"
+              size={"sm"}
+              variant={edit ? "secondary" : "default"}
+              onClick={() => setEdit(false)}
+            >
+              Preview
+            </Button>
+          </div>
+          <Button className="w-20 text-xs" size={"default"} variant={"default"}>
+            Save
           </Button>
         </div>
         <div className="section w-full h-full flex items-center justify-center">
@@ -159,7 +164,7 @@ export default function CodeMirror() {
           ) : (
             <article className=" w-3/4 h-full flex items-center justify-center p-4">
               <Markdown
-                className={`${theme.theme == 'dark' ? "markdown-body-dark" : "markdown-body-light"} w-full h-full bg-white`}
+                className={`${theme.theme == "dark" ? "markdown-body-dark" : "markdown-body-light"} w-full h-full bg-white`}
                 remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
                 children={processedInput}
                 components={{
@@ -185,7 +190,6 @@ export default function CodeMirror() {
                   },
                 }}
               />
-
             </article>
           )}{" "}
         </div>
