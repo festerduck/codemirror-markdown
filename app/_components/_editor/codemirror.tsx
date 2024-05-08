@@ -46,6 +46,9 @@ import DOMPurify from "dompurify";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula as drac } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Button } from "@/components/ui/button";
+import "@/components/styles/markdown-dark.css"
+import "@/components/styles/markdown-light.css"
+import { useTheme } from "next-themes";
 
 export default function CodeMirror() {
   const targetElement = useRef(null);
@@ -53,7 +56,13 @@ export default function CodeMirror() {
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("");
   const [edit, setEdit] = useState(true);
+
+  const theme = useTheme();
+  console.log(theme.theme)
+
+
   useEffect(() => {
+
     if (targetElement.current) {
       const updateListener = EditorView.updateListener.of((update) => {
         if (update.docChanged) {
@@ -125,7 +134,7 @@ export default function CodeMirror() {
 
   return (
     <section className="w-full h-full p-4">
-      <div className="w-full h-full flex flex-col items-center  text-foreground border border-foreground rounded-lg">
+      <div className="w-full min-h-full flex flex-col items-center  text-foreground border border-foreground rounded-lg">
         <div className="bottons w-full h-12 flex gap-2 border-b-foreground border-b  p-1">
           <Button
             className="text-xs"
@@ -144,37 +153,40 @@ export default function CodeMirror() {
             Preview
           </Button>
         </div>
-        <div className="section w-full h-full flex">
+        <div className="section w-full h-full flex items-center justify-center">
           {edit ? (
             <div className="w-full h-full" ref={targetElement}></div>
           ) : (
-            <Markdown
-              className={"w-full h-full bg-white"}
-              remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-              children={processedInput}
-              components={{
-                code(props) {
-                  const { children, className, node, ...rest } = props;
-                  const match = /language-(\w+)/.exec(className || "");
-                  const getLang = match ? match[1] : "";
-                  setLanguage(getLang);
-                  console.log(language);
-                  return match ? (
-                    <SyntaxHighlighter
-                      // {...rest}
-                      PreTag="div"
-                      children={String(children).replace(/\n$/, "")}
-                      language={match[1]}
-                      style={drac}
-                    />
-                  ) : (
-                    <code {...rest} className={className}>
-                      {children}
-                    </code>
-                  );
-                },
-              }}
-            />
+            <article className=" w-3/4 h-full flex items-center justify-center p-4">
+              <Markdown
+                className={`${theme.theme == 'dark' ? "markdown-body-dark" : "markdown-body-light"} w-full h-full bg-white`}
+                remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                children={processedInput}
+                components={{
+                  code(props) {
+                    const { children, className, node, ...rest } = props;
+                    const match = /language-(\w+)/.exec(className || "");
+                    const getLang = match ? match[1] : "";
+                    setLanguage(getLang);
+                    console.log(language);
+                    return match ? (
+                      <SyntaxHighlighter
+                        // {...rest}
+                        PreTag="div"
+                        children={String(children).replace(/\n$/, "")}
+                        language={match[1]}
+                        style={drac}
+                      />
+                    ) : (
+                      <code {...rest} className={className}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              />
+
+            </article>
           )}{" "}
         </div>
       </div>
