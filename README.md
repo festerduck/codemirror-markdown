@@ -41,3 +41,19 @@ markdown-editor-nextjs/
 └── package.json
 
 ```
+
+
+
+# Get a session in Client Component
+
+
+~~~
+  useEffect(() => {
+    const getSession = async () => {
+      const supabase = createClientComponentClient();
+      const { data: session } = await supabase.auth.getSession()
+      console.log(session)
+    }
+    getSession()
+  }, [])
+~~~

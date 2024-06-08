@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AuthError } from "@supabase/supabase-js";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 import LoadingButton from "@/components/ui/loading-button";
 
 
@@ -67,7 +67,7 @@ const SignIn = () => {
     }
     else {
 
-      router.push('/notes')
+      router.refresh()
 
       setLoad(false)
     }
@@ -113,7 +113,8 @@ const SignIn = () => {
                 </Button>
               ) :
 
-                <LoadingButton>Signing in</LoadingButton>
+                <Button className="w-full h-[52px] " ><Loader2 className="animate-spin" /></Button>
+
             }
           </form>
           {

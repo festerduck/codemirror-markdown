@@ -8,10 +8,8 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
 import AuthProvider from "@/components/AuthProvider";
-import { BgLightGradient6 } from "@/components/ui/background-grid";
 
 export const revalidate = 0;
-
 
 const inter = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -25,27 +23,22 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const supabase = createServerComponentClient({ cookies });
 
   const {
     data: { session },
   } = await supabase.auth.getSession();
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider
-
           attribute="class"
-
           defaultTheme="system"
-
           enableSystem
-
           disableTransitionOnChange
-
         >
-          <Layout>
+          <Layout session={session}>
             <AuthProvider accessToken={session?.access_token}>
               {children}
             </AuthProvider>

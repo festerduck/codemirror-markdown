@@ -1,13 +1,12 @@
-"use client"
-// Assuming the context will provide an object with an accessToken (string) and potentially more fields in the future.
-// If the context structure is different, adjust the type accordingly.
+"use client";
+
+import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
+
 interface AuthContextType {
   accessToken?: string;
 }
-
-import { createContext, ReactNode, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useRouter } from 'next/navigation';
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -16,26 +15,29 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-const AuthProvider: React.FC<AuthProviderProps> = ({ accessToken, children }) => {
+const AuthProvider: React.FC<AuthProviderProps> = ({ accessToken: initialAccessToken, children }) => {
   const supabase = createClientComponentClient();
   const router = useRouter();
+  const [accessToken, setAccessToken] = useState(initialAccessToken);
 
   useEffect(() => {
-    const {
-      data: { subscription: authListener },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.access_token !== accessToken) {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setAccessToken(session?.access_token || null);
+      if (session?.access_token !== initialAccessToken) {
         router.refresh();
       }
     });
 
     return () => {
-      authListener?.unsubscribe();
+      authListener.subscription.unsubscribe();
     };
-  }, [accessToken, supabase, router]);
+  }, [initialAccessToken, supabase, router]);
 
-  return <>{children}</>;
+  return (
+    <AuthContext.Provider value={{ accessToken }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
-
