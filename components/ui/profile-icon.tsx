@@ -1,3 +1,4 @@
+
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import {
   DropdownMenuTrigger,
@@ -7,10 +8,20 @@ import {
   DropdownMenuContent,
   DropdownMenu
 } from "@/components/ui/dropdown-menu";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useEffect } from "react";
 
 
 
 export function ProfileIcon() {
+  const supabase = createClientComponentClient();
+  const logout = async () => {
+
+    let { error } = await supabase.auth.signOut();
+  }
+
+
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,16 +33,16 @@ export function ProfileIcon() {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>Acme Inc</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">
           <UserIcon className="mr-2 h-4 w-4" />
           Profile
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">
           <SettingsIcon className="mr-2 h-4 w-4" />
           Settings
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer" onClick={logout}>
           <LogOutIcon className="mr-2 h-4 w-4" />
           Logout
         </DropdownMenuItem>
