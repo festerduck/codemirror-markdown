@@ -8,6 +8,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
 import AuthProvider from "@/components/AuthProvider";
+import { BgLightGradient6 } from "@/components/ui/background-grid";
 
 export const revalidate = 0;
 
@@ -47,7 +48,6 @@ export default async function RootLayout({
           <Layout>
             <AuthProvider accessToken={session?.access_token}>
               {children}
-
             </AuthProvider>
           </Layout>
         </ThemeProvider>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ModeToggle } from "./theme-toggle";
 import Link from "next/link";
+import { ProfileIcon } from "./ui/profile-icon";
 
 export default function NavBar() {
   return (
@@ -29,7 +30,10 @@ export default function NavBar() {
             </span>
           </div>
         </Link>
-        <ModeToggle />
+        <div className="flex items-center justify-between gap-6">
+          <ModeToggle />
+          <ProfileIcon />
+        </div>
       </nav>
     </>
   );

@@ -9,6 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
 import React, { useState } from "react";
 import { User } from "../types/types";
 import Image from "next/image";
@@ -17,11 +20,17 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { AuthError } from "@supabase/supabase-js";
+import { AlertCircle } from "lucide-react";
+import LoadingButton from "@/components/ui/loading-button";
+
 
 
 const SignIn = () => {
   const supabase = createClientComponentClient();
   const [user, setUser] = useState<User>({ email: "", password: "" });
+  const [errorAuth, setErrorAuth] = useState<string>("")
+  const [load, setLoad] = useState(false)
   const router = useRouter();
 
 
@@ -32,6 +41,7 @@ const SignIn = () => {
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorAuth("")
     const { name, value } = e.target;
     setUser((prevUser) => ({
       ...prevUser,
@@ -39,6 +49,9 @@ const SignIn = () => {
     }));
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoad(true)
+
+    setErrorAuth("")
     e.preventDefault();
     const email = user.email;
     const password = user.password;
@@ -48,10 +61,15 @@ const SignIn = () => {
     })
 
     if (error) {
-      console.error(error.message)
+      console.error("Error message: ", error.message)
+      setErrorAuth(error.message);
+      setLoad(false)
     }
     else {
+
       router.push('/notes')
+
+      setLoad(false)
     }
     console.log(user);
   };
@@ -88,10 +106,25 @@ const SignIn = () => {
               onChange={handleInputChange}
               required
             />
-            <Button type="submit" className="w-full h-[52px]" variant={"default"}>
-              Sign in
-            </Button>
+            {
+              !load ? (
+                <Button type="submit" className="w-full h-[52px]" variant={"default"}>
+                  Sign in
+                </Button>
+              ) :
+
+                <LoadingButton>Signing in</LoadingButton>
+            }
           </form>
+          {
+            errorAuth &&
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                {errorAuth}
+              </AlertDescription>
+            </Alert>
+          }
           <div className="text-sm text-center text-secondary-foreground mt-2">
             Forgot your password?{" "}
             <Link href={"#"} className="text-foreground  font-semibold">

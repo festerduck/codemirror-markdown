@@ -13,14 +13,12 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 const playfair = Playfair_Display({ subsets: ["latin"] });
 
 const LandingPage = () => {
-  const [btn, setBtn] = useState(false);
 
-  const supabase = createClientComponentClient();
 
   return (
     <>
-      <main className="w-full h-full px-10 flex flex-col items-center gap-3 bg-background">
-        <section className="relative w-full h-3/4 px-4 flex flex-col items-center justify-center gap-4 bg-[#F1F1F1] dark:bg-neutral-800 rounded-[24px]">
+      <section className="w-full h-full px-10 flex flex-col items-center gap-3 ">
+        <section className="relative w-full h-3/4 px-4 flex flex-col items-center justify-center gap-4   rounded-[24px]">
           <h1 className="text-[48px] text-center text-foreground tracking-tight leading-[48px]">
             Minimal{" "}
             <span
@@ -36,44 +34,43 @@ const LandingPage = () => {
             <br />
             saving code.
           </p>
-          <Link href={btn ? "/notes" : "/login"}>
+          <Link href={"/login"}>
             <Button variant={"default"} className="bg-foreground font-semibold">
               Get Started
             </Button>{" "}
           </Link>
           <Image
-            className="dark:hidden absolute left-32 bottom-1 "
+            className="dark:hidden absolute lg:left-32  left-4 bottom-1  "
             src={"./messy.svg"}
             alt="messy"
-            width={434}
-            height={326}
+            width={400}
+            height={300}
           />
           <Image
-            className="messy-dark dark:block hidden absolute left-32 bottom-1"
+            className="messy-dark dark:block hidden absolute lg:left-32 left-4 bottom-1 "
             src={"./messy-dark.svg"}
             alt="messy"
-            width={434}
-            height={326}
-          />
+            width={400}
+            height={300} />
           <Image
-            className="dark:hidden absolute right-32 -bottom-6"
+            className="dark:hidden absolute lg:right-32 -bottom-6 right-4"
             src={"./zombie.svg"}
             alt="zombie"
-            width={465}
-            height={348}
+            width={400}
+            height={300}
           />
           <Image
-            className="hidden dark:block absolute right-32 -bottom-6"
+            className="hidden dark:block absolute lg:right-32 -bottom-6 right-0"
             src={"./zombie-dark.svg"}
             alt="zombie"
-            width={465}
-            height={348}
+            width={400}
+            height={300}
           />
         </section>
-      </main>
-      )
+      </section>
     </>
   );
 };
 
 export default LandingPage;
+
