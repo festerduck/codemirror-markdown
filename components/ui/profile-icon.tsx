@@ -8,13 +8,30 @@ import {
   DropdownMenuContent,
   DropdownMenu
 } from "@/components/ui/dropdown-menu";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useEffect } from "react";
+import { Session, createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { use, useEffect, useState } from "react";
+import { Button } from "./button";
 
 
 
 export function ProfileIcon() {
+  const [user, setUser] = useState<string>("")
+
   const supabase = createClientComponentClient();
+
+
+  useEffect(() => {
+
+    const userData = async () => {
+
+      const { data: user } = await supabase.auth.getUser();
+      setUser(user.user?.email);
+      console.log(user)
+
+    }
+    userData()
+  }, [])
+
   const logout = async () => {
 
     let { error } = await supabase.auth.signOut();
@@ -22,16 +39,19 @@ export function ProfileIcon() {
 
 
 
+
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="h-10 w-10 cursor-pointer">
-          <AvatarImage alt="@shadcn" src="/placeholder-user.jpg" />
-          <AvatarFallback>AC</AvatarFallback>
+          <AvatarImage alt="@shadcn" src="https://i.pinimg.com/564x/52/d5/cc/52d5cc1f08415b5467e5fdac1a9387d9.jpg" />
+
+          <AvatarFallback>{user.at(0)?.toUpperCase()}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>Acme Inc</DropdownMenuLabel>
+        <DropdownMenuLabel>{user?.toLowerCase()}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer">
           <UserIcon className="mr-2 h-4 w-4" />

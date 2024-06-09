@@ -49,6 +49,7 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula as drac } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { redirect, useRouter } from "next/navigation";
 
 export default function CodeMirror() {
   const targetElement = useRef(null);
@@ -57,6 +58,7 @@ export default function CodeMirror() {
   const [language, setLanguage] = useState("");
   const [edit, setEdit] = useState(true);
 
+  const router = useRouter()
   const theme = useTheme();
   console.log(theme.theme);
 
@@ -130,6 +132,12 @@ export default function CodeMirror() {
   const processedInput =
     value == "" ? "The document has been deleted." : formatMarkdownInput(value);
 
+  const handleCancel = () => {
+
+    router.push('/notes')
+  }
+
+
   return (
     <section className="w-full h-full p-4">
       <div
@@ -154,9 +162,15 @@ export default function CodeMirror() {
               Preview
             </Button>
           </div>
-          <Button className="w-20 text-xs" size={"default"} variant={"default"}>
-            Save
-          </Button>
+          <div className="flex gap-2">
+            <Button className="w-20 text-xs" size={"default"} variant={"secondary"} onClick={handleCancel}>
+              Cancel
+            </Button>
+
+            <Button className="w-20 text-xs" size={"default"} variant={"default"}>
+              Save
+            </Button>
+          </div>
         </div>
         <div className="section w-full h-full flex items-center justify-center">
           {edit ? (
@@ -166,7 +180,6 @@ export default function CodeMirror() {
               <Markdown
                 className={`${theme.theme == "dark" ? "markdown-body-dark" : "markdown-body-light"} w-full h-full bg-white`}
                 remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-                children={processedInput}
                 components={{
                   code(props) {
                     const { children, className, node, ...rest } = props;
@@ -189,7 +202,12 @@ export default function CodeMirror() {
                     );
                   },
                 }}
-              />
+
+              >
+
+                {processedInput}
+
+              </Markdown>
             </article>
           )}{" "}
         </div>
