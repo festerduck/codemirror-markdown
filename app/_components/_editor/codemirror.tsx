@@ -119,7 +119,7 @@ export default function CodeMirror() {
     }
   }, [edit, value]); // Added `value` to the dependency array
 
-  function formatMarkdownInput(input) {
+  function formatMarkdownInput(input: string) {
     let formattedInput = input.replace(/\n/g, "  \n");
     return formattedInput;
   }
