@@ -5,7 +5,7 @@ import Main from './main';
 import { BgLightGradient6 } from './ui/background-grid';
 import { Session } from '@supabase/auth-helpers-nextjs';
 
-const Layout = ({ children, session }: { children: ReactNode, session: Session }) => {
+const Layout = ({ children, session }: { children: ReactNode, session: Session | null }) => {
   return (
     <main className='w-full h-full relative'>
 

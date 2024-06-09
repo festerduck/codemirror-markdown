@@ -9,7 +9,7 @@ import { Button } from "./ui/button";
 import LoadingButton from "./ui/loading-button";
 import { Loader2 } from "lucide-react";
 
-export default function NavBar({ session }: { session: Session }) {
+export default function NavBar({ session }: { session: Session | null }) {
   // const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
 

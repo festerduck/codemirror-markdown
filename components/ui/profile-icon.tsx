@@ -15,7 +15,7 @@ import { Button } from "./button";
 
 
 export function ProfileIcon() {
-  const [user, setUser] = useState<string>("")
+  const [user, setUser] = useState<string | undefined>("")
 
   const supabase = createClientComponentClient();
 
@@ -47,7 +47,7 @@ export function ProfileIcon() {
         <Avatar className="h-10 w-10 cursor-pointer">
           <AvatarImage alt="@shadcn" src="https://i.pinimg.com/564x/52/d5/cc/52d5cc1f08415b5467e5fdac1a9387d9.jpg" />
 
-          <AvatarFallback>{user.at(0)?.toUpperCase()}</AvatarFallback>
+          <AvatarFallback>{user?.at(0)?.toUpperCase()}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
@@ -112,7 +112,7 @@ function SettingsIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function UserIcon(props) {
+function UserIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

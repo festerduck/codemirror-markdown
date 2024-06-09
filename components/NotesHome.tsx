@@ -98,7 +98,8 @@ export default function NotesHome() {
   );
 }
 
-function Link2Icon(props) {
+interface Package2IconProps extends React.SVGProps<SVGSVGElement> { }
+function Link2Icon(props: Package2IconProps) {
   return (
     <svg
       {...props}
@@ -118,8 +119,7 @@ function Link2Icon(props) {
     </svg>
   );
 }
-
-function Package2Icon(props) {
+function Package2Icon(props: Package2IconProps) {
   return (
     <svg
       {...props}
@@ -140,7 +140,7 @@ function Package2Icon(props) {
   );
 }
 
-function SearchIcon(props) {
+function SearchIcon(props: Package2IconProps) {
   return (
     <svg
       {...props}
@@ -160,7 +160,7 @@ function SearchIcon(props) {
   );
 }
 
-function TrashIcon(props) {
+function TrashIcon(props: Package2IconProps) {
   return (
     <svg
       {...props}

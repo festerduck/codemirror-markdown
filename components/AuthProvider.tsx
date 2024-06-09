@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, ReactNode, SetStateAction, useEffect, useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 
@@ -22,7 +22,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ accessToken: initialAccessT
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      setAccessToken(session?.access_token || null);
+      setAccessToken(session?.access_token);
       if (session?.access_token !== initialAccessToken) {
         router.refresh();
       }
