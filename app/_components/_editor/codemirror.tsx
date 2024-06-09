@@ -58,7 +58,7 @@ export default function CodeMirror() {
   const [language, setLanguage] = useState("");
   const [edit, setEdit] = useState(true);
 
-  const router = useRouter()
+  const router = useRouter();
   const theme = useTheme();
   console.log(theme.theme);
 
@@ -108,8 +108,6 @@ export default function CodeMirror() {
             EditorView.theme({
               "&": {
                 height: "100%",
-
-                // minHeight: "500px", // Use minHeight to ensure it does not shrink below this height
               },
             }),
           ],
@@ -119,46 +117,28 @@ export default function CodeMirror() {
         editorView.destroy(); // Clean up the EditorView when component unmounts
       };
     }
-  }, [edit]);
-  // const clean = DOMPurify.sanitize(value);
+  }, [edit, value]); // Added `value` to the dependency array
 
-  function formatMarkdownInput(input: string) {
+  function formatMarkdownInput(input) {
     let formattedInput = input.replace(/\n/g, "  \n");
-
     return formattedInput;
   }
 
-  // processing the newlines so that instead of the double spaces and double return, only single keypress adds a newline.
-  const processedInput =
-    value == "" ? "The document has been deleted." : formatMarkdownInput(value);
+  const processedInput = value === "" ? "The document has been deleted." : formatMarkdownInput(value);
 
   const handleCancel = () => {
-
-    router.push('/notes')
+    router.push('/notes');
   }
-
 
   return (
     <section className="w-full h-full p-4">
-      <div
-        className={`w-full ${edit ? "h-full" : "min-h-full"} flex flex-col items-center  text-foreground border border-foreground rounded-lg`}
-      >
+      <div className={`w-full ${edit ? "h-full" : "min-h-full"} flex flex-col items-center  text-foreground border border-foreground rounded-lg`}>
         <div className="bottons w-full h-12 flex justify-between gap-2 border-b-foreground border-b px-2  p-1">
           <div>
-            <Button
-              className="text-xs"
-              size={"sm"}
-              variant={edit ? "default" : "secondary"}
-              onClick={() => setEdit(true)}
-            >
+            <Button className="text-xs" size={"sm"} variant={edit ? "default" : "secondary"} onClick={() => setEdit(true)}>
               Edit
             </Button>
-            <Button
-              className="text-xs"
-              size={"sm"}
-              variant={edit ? "secondary" : "default"}
-              onClick={() => setEdit(false)}
-            >
+            <Button className="text-xs" size={"sm"} variant={edit ? "secondary" : "default"} onClick={() => setEdit(false)}>
               Preview
             </Button>
           </div>
@@ -166,7 +146,6 @@ export default function CodeMirror() {
             <Button className="w-20 text-xs" size={"default"} variant={"secondary"} onClick={handleCancel}>
               Cancel
             </Button>
-
             <Button className="w-20 text-xs" size={"default"} variant={"default"}>
               Save
             </Button>
@@ -181,35 +160,32 @@ export default function CodeMirror() {
                 className={`${theme.theme == "dark" ? "markdown-body-dark" : "markdown-body-light"} w-full h-full bg-white`}
                 remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
                 components={{
-                  code(props) {
-                    const { children, className, node, ...rest } = props;
+                  code({ node, inline, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || "");
                     const getLang = match ? match[1] : "";
                     setLanguage(getLang);
                     console.log(language);
-                    return match ? (
+                    return !inline && match ? (
                       <SyntaxHighlighter
-                        // {...rest}
-                        PreTag="div"
-                        children={String(children).replace(/\n$/, "")}
-                        language={match[1]}
                         style={drac}
-                      />
+                        language={match[1]}
+                        PreTag="div"
+                        {...props}
+                      >
+                        {String(children).replace(/\n$/, "")}
+                      </SyntaxHighlighter>
                     ) : (
-                      <code {...rest} className={className}>
+                      <code className={className} {...props}>
                         {children}
                       </code>
                     );
                   },
                 }}
-
               >
-
                 {processedInput}
-
               </Markdown>
             </article>
-          )}{" "}
+          )}
         </div>
       </div>
     </section>
