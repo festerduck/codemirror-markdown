@@ -1,7 +1,19 @@
-"use client";
+"use server"
+import { createClientComponentClient, createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import LandingPage from "../_components/_landing-page/LandingPage";
-import { useState } from "react";
-export default function HomePage() {
+;
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+export default async function HomePage() {
+
+  const supabase = createServerComponentClient({ cookies });
+  const { data } = await supabase.auth.getUser();
+
+  if (data?.user) {
+    redirect('/notes');
+  }
+
+
 
   return (
     <LandingPage />
