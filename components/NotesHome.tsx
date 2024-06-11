@@ -11,12 +11,16 @@ import {
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function NotesHome() {
+  const [loading, setLoading] = useState(false)
   const router = useRouter();
   const handleNewNote = () => {
+    setLoading(true);
     const notesId = Math.random().toString(36).substring(7);
-    router.push(`/notes/${notesId}`);
+    const val = router.push(`/notes/${notesId}`);
   };
 
   return (
@@ -31,6 +35,7 @@ export default function NotesHome() {
             <span className="sr-only">Acme Inc</span>
           </Link>
           <nav className="hidden gap-4 text-sm font-medium lg:flex lg:gap-5">
+
             <Link className="text-gray-500 dark:text-gray-400" href="#">
               Notes
             </Link>
@@ -58,11 +63,13 @@ export default function NotesHome() {
           <div className="grid items-center gap-2 md:grid-cols-2">
             <h1 className="text-2xl font-semibold">All Notes</h1>
             <Button
-              className="justify-self-end"
-              size="sm"
+              className="w-24 justify-self-end"
+
               onClick={handleNewNote}
             >
-              New Note
+              {!loading ?
+                "New Note" : <Loader2 className="animate-spin" />
+              }
             </Button>
           </div>
           <div className="grid gap-4">

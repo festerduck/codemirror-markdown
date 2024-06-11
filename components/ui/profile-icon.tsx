@@ -11,6 +11,7 @@ import {
 import { Session, createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { use, useEffect, useState } from "react";
 import { Button } from "./button";
+import { SVGProps } from "@/app/types/types";
 
 
 
@@ -71,7 +72,7 @@ export function ProfileIcon() {
   );
 }
 
-function LogOutIcon(props: React.SVGProps<SVGSVGElement>) {
+function LogOutIcon(props: SVGProps) {
   return (
     <svg
       {...props}
@@ -92,7 +93,7 @@ function LogOutIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function SettingsIcon(props: React.SVGProps<SVGSVGElement>) {
+function SettingsIcon(props: SVGProps) {
   return (
     <svg
       {...props}
@@ -112,7 +113,7 @@ function SettingsIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function UserIcon(props: React.SVGProps<SVGSVGElement>) {
+function UserIcon(props: SVGProps) {
   return (
     <svg
       {...props}

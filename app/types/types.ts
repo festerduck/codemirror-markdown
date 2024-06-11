@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 
 export type User = {
   email: string;
@@ -6,3 +5,4 @@ export type User = {
 };
 
 
+export type SVGProps = React.SVGAttributes<SVGSVGElement>;

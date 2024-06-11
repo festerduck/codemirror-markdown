@@ -12,7 +12,6 @@ export default async function Notes() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user);
   if (!user) {
     redirect("/login");
   }

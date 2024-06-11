@@ -55,9 +55,7 @@ export default function NavBar({ session }: { session: Session | null }) {
           {loading && <Button ><Loader2 className="animate-spin" /></Button>}
           {session && !loading && <ProfileIcon />}
           {!session && !loading &&
-            <Link href={"/login"}>
-              <Button >Login</Button>
-            </Link>
+            <LoadingButton route="/login">Login</LoadingButton>
           }
           <ModeToggle />
         </div>

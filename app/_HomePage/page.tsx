@@ -1,5 +1,5 @@
 "use server"
-import { createClientComponentClient, createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import LandingPage from "../_components/_landing-page/LandingPage";
 ;
 import { cookies } from 'next/headers';

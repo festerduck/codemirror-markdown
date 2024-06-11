@@ -1,0 +1,18 @@
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 9.4066C0 4.21148 4.21148 0 9.4066 0H24.5617C29.7568 0 33.9683 4.21148 33.9683 9.4066V24.5617C33.9683 29.7568 29.7568 33.9683 24.5617 33.9683H9.4066C4.21148 33.9683 0 29.7568 0 24.5617V9.4066Z" fill="url(#paint0_linear_123_989)"/>
+<circle cx="10.9736" cy="11.497" r="2.09035" fill="#262626"/>
+<circle cx="22.4708" cy="11.497" r="2.09035" fill="#262626"/>
+<circle cx="16.7226" cy="8.88406" r="2.09035" fill="#737373"/>
+<circle cx="10.9741" cy="22.9939" r="2.09035" transform="rotate(-180 10.9741 22.9939)" fill="#737373"/>
+<circle cx="22.4705" cy="22.9939" r="2.09035" transform="rotate(-180 22.4705 22.9939)" fill="#262626"/>
+<circle cx="25.084" cy="17.2455" r="2.09035" transform="rotate(-180 25.084 17.2455)" fill="#737373"/>
+<circle cx="16.7226" cy="25.6068" r="2.09035" fill="#262626"/>
+<circle cx="16.7223" cy="17.2455" r="2.09035" transform="rotate(-180 16.7223 17.2455)" fill="#262626"/>
+<circle cx="8.36066" cy="17.2455" r="2.09035" transform="rotate(-180 8.36066 17.2455)" fill="#262626"/>
+<defs>
+<linearGradient id="paint0_linear_123_989" x1="5.04123" y1="33.9683" x2="28.927" y2="-4.5656e-07" gradientUnits="userSpaceOnUse">
+<stop offset="0.24" stop-color="#DDE4F3"/>
+<stop offset="1" stop-color="#CDD1D5"/>
+</linearGradient>
+</defs>
+</svg>
