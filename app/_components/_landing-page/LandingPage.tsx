@@ -14,17 +14,17 @@ const LandingPage = () => {
       <section className="w-full h-full px-10 flex flex-col items-center gap-3 ">
         <section className="relative w-full h-5/6 lg:h-3/4 px-4 flex flex-col items-center justify-center gap-5 lg:gap-6 rounded-[24px]">
           <BadgeButton />
-          <h1 className="lg:w-1/2 text-[48px] lg:text-center text-foreground tracking-tight leading-[56px]">
+          <h1 className="lg:w-1/2 text-[60px] lg:text-center text-foreground font-bold tracking-tight leading-[60px]">
             Minimal
             <span
-              className={`text-[56px] pf-italic text-[#E87205] dark:text-[#FB9537]`}
+              className={`text-[68px] pf-italic text-[#E87205] dark:text-[#FB9537]`}
             >
               {" "}
               Markdown Writer{" "}
             </span>{" "}
             for Productive People.
           </h1>
-          <p className="text-center text-secondary-foreground">
+          <p className="text-lg text-center text-secondary-foreground">
             Composr offers a simple markdown writer - from writing notes &
             saving code.
           </p>

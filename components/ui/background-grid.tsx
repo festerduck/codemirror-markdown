@@ -23,8 +23,8 @@ const BgLightGradient6 = () => {
         ) :
           <div className="absolute overflow-hidden w-full h-full -z-30">
             <div className="relative h-full w-full bg-slate-950">
-              <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]" />
-              <div className="absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]" />
+              <div className="absolute bottom-0 left-[-20%] lg:left-[-10%] right-0 top-[-10%] h-[500px] lg:h-[600px] w-[500px] lg:w-[600px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]" />
+              <div className="absolute bottom-0 right-[-20%] lg:right-[-10%] top-[-10%] h-[500px] lg:h-[700px] w-[500px] lg:w-[700px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]" />
             </div>
           </div>
       }
