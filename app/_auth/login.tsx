@@ -75,7 +75,7 @@ const SignIn = () => {
   };
   return (
     <>
-      <Card className="mx-auto w-full h-4/6 md:w-[26rem] md:min-h-[500px] bg-transparent md:bg-card flex flex-col rounded-[16px] justify-center gap-2">
+      <Card className="mx-auto w-full h-4/6 md:w-[26rem] md:min-h-[500px] bg-transparent md:bg-transparent border-0 md:border flex flex-col rounded-[16px] justify-center gap-2">
         <CardHeader className="text-center">
           <CardTitle className="font-semibold text-foreground flex flex-col items-center gap-4">
             <Image src={"./logo.svg"} className="dark:hidden" alt="logo" height={60} width={60} />

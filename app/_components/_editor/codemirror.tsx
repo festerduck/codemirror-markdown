@@ -118,7 +118,7 @@ export default function CodeMirror() {
         editorView.destroy(); // Clean up the EditorView when component unmounts
       };
     }
-  }, [edit, value]); // Added `value` to the dependency array
+  }, [edit]); // Added `value` to the dependency array
 
   function formatMarkdownInput(input: string) {
     let formattedInput = input.replace(/\n/g, "  \n");
